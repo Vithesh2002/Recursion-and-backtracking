@@ -1,0 +1,40 @@
+import java.util.* ;
+import java.io.*; 
+import java.util.ArrayList;
+
+public class Solution {
+	public static ArrayList<String> wordBreak(String s, ArrayList<String> dictionary) {
+		int n=s.length();
+    
+		Boolean[]dp=new Boolean[n];
+		boolean result=helper(s,dictionary,0,n,dp);
+		if(!result)return new ArrayList<>();
+        int i=0,j=1;
+		ArrayList<String>al=new ArrayList<>();
+		while(j<n&&i<n)
+		{
+			while(j<n && (dp[j]==null || dp[j]==false)) j++;
+			if(j>=n)break;
+			al.add(s.substring(i,j));
+			i=j;
+			j++;
+		}
+    
+		al.add(s.substring(i,j));
+		return al;
+	}
+  
+	public static boolean helper(String s,ArrayList<String>dic,int index,int n,Boolean[]dp)
+	{
+		if(index==n)return true;
+		if(dp[index]!=null)return dp[index];
+		if(dic==null)return false;
+		for(int i=index;i<n;i++)
+		{
+			String st=s.substring(index,i+1);
+			if(dic.contains(st)&&helper(s,dic,i+1,n,dp))
+			return dp[index]=true;
+		}
+		return dp[index]=false;
+	}
+}
