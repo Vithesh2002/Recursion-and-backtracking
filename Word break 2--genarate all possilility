@@ -1,0 +1,31 @@
+import java.util.* ;
+import java.io.*; 
+import java.util.ArrayList;
+
+public class Solution {
+
+	public static ArrayList<String> wordBreak(String s, ArrayList<String> dictionary) {
+		ArrayList<String>store=new ArrayList<>();
+		int n=s.length();
+		helper(s,dictionary,n,store,0,new StringBuilder());
+		return store;
+	}
+	public static void helper(String s,ArrayList<String>dic,int n,ArrayList<String>store,int index,StringBuilder cur)
+	{
+		if(index==n)
+		{
+			store.add(cur.toString().trim());
+			return;
+		}
+		for(int i=index;i<n;i++)
+		{
+			String st=s.substring(index,i+1);
+			if(dic.contains(st))
+			{
+				int n1=cur.length();
+				helper(s,dic,n,store,i+1,cur.append(" ").append(st));
+                cur.setLength(n1);
+			}
+		}
+	}
+}
